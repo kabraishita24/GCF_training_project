@@ -5,9 +5,9 @@ import os
 app = Flask(__name__)
 
 DATA_FILE = "data.json"
+USER_FILE = "users.json"
 
-# LOAD DATA
-
+# ---------------- LOAD DATA ----------------
 def load_data():
     if not os.path.exists(DATA_FILE):
         return {"lost": [], "found": []}
@@ -18,49 +18,70 @@ def load_data():
         except json.JSONDecodeError:
             return {"lost": [], "found": []}
 
-
-
-# SAVE DATA
-
+# ---------------- SAVE DATA ----------------
 def save_data(data):
     with open(DATA_FILE, "w") as f:
         json.dump(data, f, indent=4)
 
+# ---------------- LOAD USERS ----------------
+def load_users():
+    if not os.path.exists(USER_FILE):
+        return {}
 
+    with open(USER_FILE, "r") as f:
+        try:
+            return json.load(f)
+        except:
+            return {}
 
-# HOME (LOGIN PAGE)
+# ---------------- SAVE USERS ----------------
+def save_users(users):
+    with open(USER_FILE, "w") as f:
+        json.dump(users, f, indent=4)
 
+# ---------------- HOME ----------------
 @app.route('/')
 def home():
     return render_template('login.html')
 
+# ---------------- REGISTER ----------------
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
 
+        users = load_users()
 
-# LOGIN ROUTE
+        if username in users:
+            return "User already exists"
 
+        users[username] = password
+        save_users(users)
+
+        return redirect(url_for('home'))
+
+    return render_template('register.html')
+
+# ---------------- LOGIN ----------------
 @app.route('/login', methods=['POST'])
 def login():
     username = request.form.get('username')
     password = request.form.get('password')
 
-    # Simple validation
-    if username and password:
+    users = load_users()
+
+    if username in users and users[username] == password:
         return redirect(url_for('index'))
 
     return "Invalid Credentials"
 
-
-
-# INDEX PAGE
-
+# ---------------- INDEX ----------------
 @app.route('/index')
 def index():
     return render_template('index.html')
 
-
-
-# LOST ITEM
-
+# ---------------- LOST ----------------
 @app.route('/lost', methods=['GET', 'POST'])
 def lost():
     data = load_data()
@@ -78,10 +99,7 @@ def lost():
 
     return render_template('lost.html')
 
-
-
-# FOUND ITEM
-
+# ---------------- FOUND ----------------
 @app.route('/found', methods=['GET', 'POST'])
 def found():
     data = load_data()
@@ -99,10 +117,7 @@ def found():
 
     return render_template('found.html')
 
-
-
-# DASHBOARD
-
+# ---------------- DASHBOARD ----------------
 @app.route('/dashboard')
 def dashboard():
     data = load_data()
@@ -127,9 +142,6 @@ def dashboard():
         matches=matches
     )
 
-
-
-# RUN SERVER
-
+# ---------------- RUN ----------------
 if __name__ == "__main__":
     app.run(debug=True)
