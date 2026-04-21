@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Create Account</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  background: #f5f7fb;
+}
+
+/* LEFT */
+.left {
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px;
+}
+
+.title {
+  position: absolute;
+  top: 40px;
+  left: 80px;
+  font-size: 28px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+/* FORM */
+.form-box {
+  max-width: 320px;
+}
+
+.form-box h2 {
+  font-size: 22px;
+  margin-bottom: 25px;
+  color: #333;
+}
+
+input {
+  width: 100%;
+  padding: 12px 14px;
+  margin-bottom: 15px;
+  border: 1px solid #dcdcdc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+input:focus {
+  border-color: #4a90e2;
+  outline: none;
+}
+
+/* BUTTON */
+button {
+  width: 100%;
+  padding: 12px;
+  background: #4a90e2;
+  border: none;
+  color: white;
+  font-weight: 500;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #3b7dd8;
+}
+
+/* LINK */
+.link {
+  margin-top: 15px;
+  font-size: 13px;
+  color: #666;
+}
+
+.link a {
+  color: #4a90e2;
+  text-decoration: none;
+}
+
+/* RIGHT IMAGE */
+.right {
+  width: 55%;
+  position: relative;
+  background: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f') center/cover no-repeat;
+}
+
+.right::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(245,247,251,0.9), rgba(245,247,251,0.2));
+}
+</style>
+</head>
+
+<body>
+
+<div class="title">Asset Recovery Hub</div>
+
+<div class="left">
+  <div class="form-box">
+    <h2>Create Account</h2>
+
+    <!-- IMPORTANT (DON'T CHANGE THIS) -->
+    <form method="POST" action="/register">
+
+      <input type="text" name="username" placeholder="Enter Username" required>
+      <input type="password" name="password" placeholder="Enter Password" required>
+
+      <button type="submit">Register</button>
+
+    </form>
+
+    <div class="link">
+      Already have an account? <a href="/">Login</a>
+    </div>
+
+  </div>
+</div>
+
+<div class="right"></div>
+
+</body>
+</html>
