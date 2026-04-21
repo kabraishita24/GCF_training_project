@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, url_for
 import json
 import os
 
@@ -6,10 +6,8 @@ app = Flask(__name__)
 
 DATA_FILE = "data.json"
 
-
-# =========================
 # LOAD DATA
-# =========================
+
 def load_data():
     if not os.path.exists(DATA_FILE):
         return {"lost": [], "found": []}
@@ -17,7 +15,7 @@ def load_data():
     with open(DATA_FILE, "r") as f:
         try:
             return json.load(f)
-        except:
+        except json.JSONDecodeError:
             return {"lost": [], "found": []}
 
 
@@ -38,16 +36,16 @@ def home():
 
 
 # =========================
-# LOGIN ROUTE (FIX FOR YOUR ERROR)
+# LOGIN ROUTE
 # =========================
 @app.route('/login', methods=['POST'])
 def login():
-    username = request.form['username']
-    password = request.form['password']
+    username = request.form.get('username')
+    password = request.form.get('password')
 
-    # SIMPLE LOGIN CHECK (NO DATABASE VERSION)
+    # Simple validation
     if username and password:
-        return redirect('/index')
+        return redirect(url_for('index'))
 
     return "Invalid Credentials"
 
@@ -69,14 +67,14 @@ def lost():
 
     if request.method == 'POST':
         data["lost"].append({
-            "name": request.form['name'],
-            "desc": request.form['desc'],
-            "location": request.form['location'],
-            "date": request.form['date']
+            "name": request.form.get('name'),
+            "desc": request.form.get('desc'),
+            "location": request.form.get('location'),
+            "date": request.form.get('date')
         })
 
         save_data(data)
-        return redirect('/dashboard')
+        return redirect(url_for('dashboard'))
 
     return render_template('lost.html')
 
@@ -90,14 +88,14 @@ def found():
 
     if request.method == 'POST':
         data["found"].append({
-            "name": request.form['name'],
-            "desc": request.form['desc'],
-            "location": request.form['location'],
-            "date": request.form['date']
+            "name": request.form.get('name'),
+            "desc": request.form.get('desc'),
+            "location": request.form.get('location'),
+            "date": request.form.get('date')
         })
 
         save_data(data)
-        return redirect('/dashboard')
+        return redirect(url_for('dashboard'))
 
     return render_template('found.html')
 
@@ -109,15 +107,18 @@ def found():
 def dashboard():
     data = load_data()
 
-    lost_items = data["lost"]
-    found_items = data["found"]
+    lost_items = data.get("lost", [])
+    found_items = data.get("found", [])
 
     matches = []
 
     for l in lost_items:
         for f in found_items:
-            if l["name"].lower() == f["name"].lower():
-                matches.append((l, f))
+            if l.get("name", "").lower() == f.get("name", "").lower():
+                matches.append({
+                    "lost": l,
+                    "found": f
+                })
 
     return render_template(
         "dashboard.html",
