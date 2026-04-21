@@ -19,25 +19,25 @@ def load_data():
             return {"lost": [], "found": []}
 
 
-# =========================
+
 # SAVE DATA
-# =========================
+
 def save_data(data):
     with open(DATA_FILE, "w") as f:
         json.dump(data, f, indent=4)
 
 
-# =========================
+
 # HOME (LOGIN PAGE)
-# =========================
+
 @app.route('/')
 def home():
     return render_template('login.html')
 
 
-# =========================
+
 # LOGIN ROUTE
-# =========================
+
 @app.route('/login', methods=['POST'])
 def login():
     username = request.form.get('username')
@@ -50,17 +50,17 @@ def login():
     return "Invalid Credentials"
 
 
-# =========================
+
 # INDEX PAGE
-# =========================
+
 @app.route('/index')
 def index():
     return render_template('index.html')
 
 
-# =========================
+
 # LOST ITEM
-# =========================
+
 @app.route('/lost', methods=['GET', 'POST'])
 def lost():
     data = load_data()
@@ -79,9 +79,9 @@ def lost():
     return render_template('lost.html')
 
 
-# =========================
+
 # FOUND ITEM
-# =========================
+
 @app.route('/found', methods=['GET', 'POST'])
 def found():
     data = load_data()
@@ -100,9 +100,9 @@ def found():
     return render_template('found.html')
 
 
-# =========================
+
 # DASHBOARD
-# =========================
+
 @app.route('/dashboard')
 def dashboard():
     data = load_data()
