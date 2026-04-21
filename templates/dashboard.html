@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dashboard</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+    transition: 0.3s;
+}
+
+body {
+    background: linear-gradient(135deg, #f5f7fb, #e6ecf5);
+}
+
+/* HEADER */
+.header {
+    text-align: center;
+    padding: 20px;
+}
+
+.header h2 {
+    font-size: 28px;
+}
+
+/* STATS */
+.stats {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 20px;
+}
+
+.stat {
+    padding: 20px;
+    border-radius: 15px;
+    background: rgba(255,255,255,0.6);
+    backdrop-filter: blur(10px);
+    text-align: center;
+    width: 150px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+}
+
+.stat:hover {
+    transform: scale(1.05);
+}
+
+/* GRID */
+.grid {
+    display: flex;
+    gap: 25px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* SECTION */
+.section {
+    width: 320px;
+}
+
+/* CARD */
+.card {
+    background: rgba(255,255,255,0.6);
+    backdrop-filter: blur(12px);
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    position: relative;
+}
+
+/* MATCH GLOW */
+.match {
+    border-left: 5px solid #4a90e2;
+}
+
+/* SEARCH */
+.search {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+}
+
+/* IMAGE */
+.card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-top: 5px;
+}
+
+/* FEEDBACK */
+.feedback {
+    text-align: center;
+    margin: 40px;
+}
+
+.star {
+    font-size: 26px;
+    cursor: pointer;
+}
+
+/* DARK MODE */
+.dark {
+    background: #0f172a;
+    color: white;
+}
+
+.dark .card,
+.dark .stat {
+    background: rgba(255,255,255,0.05);
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    <h2>🚀 AI Smart Dashboard</h2>
+    <p>Track & match items intelligently</p>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+    <div class="stat">
+        <h3>{{ lost|length }}</h3>
+        <p>Lost</p>
+    </div>
+    <div class="stat">
+        <h3>{{ found|length }}</h3>
+        <p>Found</p>
+    </div>
+    <div class="stat">
+        <h3>{{ matches|length }}</h3>
+        <p>Matches</p>
+    </div>
+</div>
+
+<!-- MAIN -->
+<div class="grid">
+
+    <!-- LOST -->
+    <div class="section">
+        <h3>🔍 Lost Items</h3>
+        <input class="search" placeholder="Search..." onkeyup="search(this,'lost')">
+
+        {% for item in lost %}
+        <div class="card lost">
+            <b>{{ item.name }}</b><br>
+            {{ item.location }}<br>
+            {{ item.date }}
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- FOUND -->
+    <div class="section">
+        <h3>📦 Found Items</h3>
+        <input class="search" placeholder="Search..." onkeyup="search(this,'found')">
+
+        {% for item in found %}
+        <div class="card found">
+            <b>{{ item.name }}</b><br>
+            {{ item.location }}<br>
+            {{ item.date }}
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- MATCH -->
+    <div class="section">
+        <h3>🔥 Smart Matches</h3>
+        <input class="search" placeholder="Search..." onkeyup="search(this,'match')">
+
+        {% for l, f in matches %}
+        <div class="card match">
+            <b>{{ l.name }}</b><br>
+            Lost: {{ l.location }}<br>
+            Found: {{ f.location }}
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+<!-- FEEDBACK -->
+<div class="feedback">
+    <h3>⭐ Rate Experience</h3>
+    <span class="star" onclick="rate(1)">⭐</span>
+    <span class="star" onclick="rate(2)">⭐</span>
+    <span class="star" onclick="rate(3)">⭐</span>
+    <span class="star" onclick="rate(4)">⭐</span>
+    <span class="star" onclick="rate(5)">⭐</span>
+
+    <p id="msg"></p>
+</div>
+
+<!-- JS -->
+<script>
+
+// SEARCH
+function search(input, type) {
+    let val = input.value.toLowerCase();
+    let cards = document.querySelectorAll("." + type);
+
+    cards.forEach(card => {
+        card.style.display =
+        card.textContent.toLowerCase().includes(val) ? "" : "none";
+    });
+}
+
+// RATING
+function rate(n) {
+    document.getElementById("msg").innerText =
+        "You rated " + n + " ⭐ — Thank you!";
+}
+
+</script>
+
+</body>
+</html>

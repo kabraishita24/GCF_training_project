@@ -1,0 +1,134 @@
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.3s ease;
+}
+
+/* BODY */
+body {
+    background: linear-gradient(135deg, #f5f7fb, #e6ecf5);
+    min-height: 100vh;
+}
+
+/* DARK MODE */
+body.dark {
+    background: #0f172a;
+    color: white;
+}
+
+/* NAVBAR */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 50px;
+    align-items: center;
+}
+
+.logo {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.nav-right {
+    display: flex;
+    gap: 15px;
+}
+
+.nav-right a {
+    text-decoration: none;
+    color: white;
+    background: #4a90e2;
+    padding: 8px 14px;
+    border-radius: 6px;
+}
+
+.nav-right button {
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* HERO */
+.hero {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.hero h1 {
+    font-size: 34px;
+}
+
+.hero p {
+    color: gray;
+}
+
+/* GRID */
+.grid {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 40px;
+    flex-wrap: wrap;
+}
+
+/* CARD */
+.card {
+    width: 260px;
+    padding: 30px;
+    border-radius: 18px;
+    text-align: center;
+    backdrop-filter: blur(15px);
+    background: rgba(255,255,255,0.6);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    position: relative;
+}
+
+/* GLOW EFFECT */
+.card:hover {
+    transform: translateY(-12px) scale(1.04);
+}
+
+/* COLORS */
+.red { border-top: 4px solid #ff4d4d; }
+.green { border-top: 4px solid #28c76f; }
+.blue { border-top: 4px solid #4a90e2; }
+
+/* ICON */
+.icon {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+/* TEXT */
+.card h2 {
+    margin-bottom: 10px;
+}
+
+.card p {
+    font-size: 14px;
+    color: gray;
+}
+
+/* BUTTON */
+.card a {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 18px;
+    background: #4a90e2;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+}
+
+/* DARK MODE FIX */
+body.dark .card {
+    background: rgba(255,255,255,0.05);
+}
+
+body.dark .hero p {
+    color: #bbb;
+}

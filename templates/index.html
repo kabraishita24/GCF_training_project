@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Asset Recovery Hub</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/style.css">
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <div class="logo">Asset Recovery Hub</div>
+
+    <div class="nav-right">
+        <button onclick="toggleDark()">🌙</button>
+        <a href="/">Logout</a>
+    </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+    <h1>Welcome Back 👋</h1>
+    <p>Find, report, and recover items effortlessly</p>
+</div>
+
+<!-- CARDS -->
+<div class="grid">
+
+    <div class="card red">
+        <div class="icon">🔍</div>
+        <h2>Report Lost</h2>
+        <p>Lost something important? Start here.</p>
+        <a href="/lost">Start</a>
+    </div>
+
+    <div class="card green">
+        <div class="icon">📦</div>
+        <h2>Report Found</h2>
+        <p>Help someone by reporting found items.</p>
+        <a href="/found">Start</a>
+    </div>
+
+    <div class="card blue">
+        <div class="icon">📊</div>
+        <h2>Dashboard</h2>
+        <p>Track all reports and matches.</p>
+        <a href="/dashboard">Open</a>
+    </div>
+
+</div>
+
+<!-- JS -->
+<script>
+// Dark mode toggle
+function toggleDark() {
+    document.body.classList.toggle("dark");
+}
+</script>
+
+</body>
+</html>
